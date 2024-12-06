@@ -58,14 +58,21 @@ class Program
         Console.Write("Enter price: ");
         int price = int.Parse(Console.ReadLine());
 
+        Console.Write("Enter purchase date (yyyy-MM-dd): ");
+        DateTime purchaseDate;
+        while (!DateTime.TryParse(Console.ReadLine(), out purchaseDate))
+        {
+            Console.Write("Invalid date format. Please enter date as yyyy-MM-dd: ");
+        }
+
         var asset = new Asset
         {
             Type = type,
             Brand = brand,
             ModelName = model,
             Price = price,
-            PurchaseDate = DateTime.Now,
-            EndOfLife = DateTime.Now.AddYears(3)
+            PurchaseDate = purchaseDate,
+            EndOfLife = purchaseDate.AddYears(3)
         };
 
         using (var context = new AssetDbContext())
@@ -132,7 +139,16 @@ class Program
 
             foreach (var a in assets)
             {
+                // Check if purchase date is more than 3 years ago
+                if (a.PurchaseDate < DateTime.Now.AddYears(-3))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                }
+
                 Console.WriteLine($"Id: {a.Id}, Type: {a.Type}, Brand: {a.Brand}, Model: {a.ModelName}, Price: {a.Price}, PurchaseDate: {a.PurchaseDate:yyyy-MM-dd}");
+
+                // Reset color back to default
+                Console.ForegroundColor = ConsoleColor.Gray;
             }
         }
 
