@@ -1,20 +1,23 @@
 ﻿using System;
+using System.Linq; 
 
 class Program
 {
+    // Main menu loop
     static void Main(string[] args)
     {
         bool running = true;
         while (running)
         {
-            Console.Clear(); // Clear console for better readability
+            Console.Clear();
             Console.WriteLine("Asset Manager");
             Console.WriteLine("------------");
             Console.WriteLine("1. Add Asset");
             Console.WriteLine("2. Remove Asset");
             Console.WriteLine("3. View Assets");
-            Console.WriteLine("4. Exit");
-            Console.Write("\nSelect an option (1-4): ");
+            Console.WriteLine("4. Sort by Purchase date"); 
+            Console.WriteLine("5. Exit");
+            Console.Write("\nSelect an option (1-5): ");
 
             string choice = Console.ReadLine();
 
@@ -30,6 +33,9 @@ class Program
                     ViewAssets();
                     break;
                 case "4":
+                    ViewSortedAssets();
+                    break;
+                case "5": 
                     running = false;
                     break;
                 default:
@@ -40,6 +46,42 @@ class Program
         }
     }
 
+    // Displays assets sorted by purchase date, marks old assets in red
+    static void ViewSortedAssets()
+    {
+        Console.Clear();
+        Console.WriteLine("Assets Sorted by Purchase Date");
+        Console.WriteLine("-----------------------------");
+
+        using (var context = new AssetDbContext())
+        {
+            // Get assets and sort them by purchase date
+            var sortedAssets = context.Assets
+                .OrderBy(a => a.PurchaseDate)
+                .ToList();
+
+            Console.WriteLine($"Total assets found: {sortedAssets.Count}\n");
+
+            foreach (var a in sortedAssets)
+            {
+                // Check if purchase date is more than 3 years ago
+                if (a.PurchaseDate < DateTime.Now.AddYears(-3))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                }
+
+                Console.WriteLine($"{a.Id,-5} {a.Type,-12} {a.Brand,-15} {a.ModelName,-15} ${a.Price,-10} {a.PurchaseDate:yyyy-MM-dd}");
+
+                // Reset color back to default
+                Console.ForegroundColor = ConsoleColor.Gray;
+            }
+        }
+
+        Console.WriteLine("\nPress any key to return to menu...");
+        Console.ReadKey();
+    }
+
+    // Adds new asset to database with user input validation
     static void AddAsset()
     {
         Console.Clear();
@@ -86,19 +128,20 @@ class Program
         Console.ReadKey();
     }
 
+    // Removes Asset by ID
     static void RemoveAsset()
     {
         Console.Clear();
         Console.WriteLine("Remove Asset");
         Console.WriteLine("------------");
 
-        // First show all assets
+       
         using (var context = new AssetDbContext())
         {
             var assets = context.Assets.ToList();
             foreach (var a in assets)
             {
-                Console.WriteLine($"Id: {a.Id}, Type: {a.Type}, Brand: {a.Brand}, Model: {a.ModelName}, Price: {a.Price}");
+                Console.WriteLine($"{a.Id,-5} {a.Type,-12} {a.Brand,-15} {a.ModelName,-15} ${a.Price,-10}");
             }
 
             Console.Write("\nEnter the Id of the asset to remove: ");
@@ -126,6 +169,7 @@ class Program
         Console.ReadKey();
     }
 
+    // Displays all assets, marks assets older than 3 years in red
     static void ViewAssets()
     {
         Console.Clear();
@@ -145,8 +189,7 @@ class Program
                     Console.ForegroundColor = ConsoleColor.Red;
                 }
 
-                Console.WriteLine($"Id: {a.Id}, Type: {a.Type}, Brand: {a.Brand}, Model: {a.ModelName}, Price: {a.Price}, PurchaseDate: {a.PurchaseDate:yyyy-MM-dd}");
-
+                Console.WriteLine($"{a.Id,-5} {a.Type,-12} {a.Brand,-15} {a.ModelName,-15} ${a.Price,-10} {a.PurchaseDate:yyyy-MM-dd}");
                 // Reset color back to default
                 Console.ForegroundColor = ConsoleColor.Gray;
             }

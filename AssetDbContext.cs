@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer;  // Add this line
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.SqlServer;  
 
 public class AssetDbContext : DbContext
 {
@@ -10,7 +9,7 @@ public class AssetDbContext : DbContext
     // Configure the database connection
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        // This connection string uses LocalDB, which comes with Visual Studio
+       
         optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=AssetManagerDB;Trusted_Connection=True;");
     }
 }

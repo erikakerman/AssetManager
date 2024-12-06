@@ -5,7 +5,7 @@ public class Asset
 {
     [Key]
     public int Id { get; set; }
-    public string Type { get; set; }    // "Computer" or "Phone"
+    public string Type { get; set; }   
     public string Brand { get; set; }
     public string ModelName { get; set; }
     public DateTime PurchaseDate { get; set; }
