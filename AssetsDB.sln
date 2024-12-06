@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssetsDB", "AssetsDB.csproj", "{C63C8108-545F-4F33-ABA7-0EFEA47B90C7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C63C8108-545F-4F33-ABA7-0EFEA47B90C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C63C8108-545F-4F33-ABA7-0EFEA47B90C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C63C8108-545F-4F33-ABA7-0EFEA47B90C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C63C8108-545F-4F33-ABA7-0EFEA47B90C7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F60EE1E2-DDF8-4E25-9073-D662E141E37A}
+	EndGlobalSection
+EndGlobal
